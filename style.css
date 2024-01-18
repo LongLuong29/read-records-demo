@@ -1,0 +1,6 @@
+.custom-search-box {
+    max-width: 300px; /* Đặt kích thước tối đa của ô tìm kiếm */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
