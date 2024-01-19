@@ -1,27 +1,10 @@
 var myData = [];
 
-// $("#myInput").on("keyup", function () {
-//     var value = $(this).val().toLowerCase();
-//     $("#myTable").child("tr").filter(function () {
-//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-//     });
-//   });
-
 loadData();
 
-function deleteSelected() {
-    var allCheckboxes = $("input[type='checkbox']");
-    var selectedCheckboxes = $('input[type="checkbox"]:checked');
-
-    selectedCheckboxes.each(function () {
-        myData.splice($(this).val(), 1);
-    })
-    console.log(myData);
-    
-    //Lưu dữ liệu vào localStorage
-    var jsonString = JSON.stringify(myData);
-    localStorage.setItem("data", jsonString);
-    location.reload();
+function deleteRecord() {
+    var deletedRecord = $("button.deleteRecord");
+    console.log(deletedRecord.val());
 }
 
 function loadData() {
@@ -31,18 +14,18 @@ function loadData() {
         for (const records of myData) {
             var innerHTML = `
         <tr class="deletedCheckbox" value="${myData.indexOf(records)}">
-            <td><input value="${myData.indexOf(records)}" type="checkbox"/></td>
+            <td><input class="recordCheckbox" value="${myData.indexOf(records)}" type="checkbox"/></td>
             <td>${records.name}</td>
             <td>${records.description}</td>
-            <td>$${records.price}</td>
+            <td>$${records.price}</td> 
             <td>${records.category}</td>
             <td>
-            <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-            </button>
-            <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-            </button>
+                <button type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>
+                <button type="button" class="deleteRecord btn btn-danger" data-toggle="modal" data-target="#deleteRecordModal" value="${myData.indexOf(records)}">
+                    <span class="glyphicon glyphicon-trash"></span> Delete
+                </button>
             </td>
         </tr>
         `;
@@ -72,3 +55,39 @@ function saveData() {
     localStorage.setItem("data", jsonString);
     location.reload();
 }
+
+function selectAllRecords(){
+    var checkedSelectedAll = $("input#selectAllRecords");
+    var allRecordCheckbox =  $("input.recordCheckbox");
+    if(checkedSelectedAll.is(":checked") == true){
+        for (var i = 0; i < allRecordCheckbox.length; i++){
+            allRecordCheckbox[i].checked = true;
+        }
+    }
+    else{
+        for (var i = 0; i < allRecordCheckbox.length; i++){
+            allRecordCheckbox[i].checked = false;
+        }
+    }
+}
+
+function deleteSelected() {
+    var allCheckboxes = $("input.recordCheckbox");
+    var selectedCheckboxes = $('input.recordCheckbox:checked');
+
+    selectedCheckboxes.each(function () {
+        myData.splice($(this).val(), 1);
+    })
+    //Lưu dữ liệu vào localStorage
+    var jsonString = JSON.stringify(myData);
+    localStorage.setItem("data", jsonString);
+    location.reload();
+}
+
+// $("#myInput").on("keyup", function () {
+//     var value = $(this).val().toLowerCase();
+//     $("#myTable").child("tr").filter(function () {
+//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+//     });
+//   });
+
