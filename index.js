@@ -1,21 +1,37 @@
 var myData = [];
 
-$("#myInput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#myTable").child("tr").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-    });
-  });
+// $("#myInput").on("keyup", function () {
+//     var value = $(this).val().toLowerCase();
+//     $("#myTable").child("tr").filter(function () {
+//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+//     });
+//   });
 
 loadData();
+
+function deleteSelected() {
+    var allCheckboxes = $("input[type='checkbox']");
+    var selectedCheckboxes = $('input[type="checkbox"]:checked');
+
+    selectedCheckboxes.each(function () {
+        myData.splice($(this).val(), 1);
+    })
+    console.log(myData);
+    
+    //Lưu dữ liệu vào localStorage
+    var jsonString = JSON.stringify(myData);
+    localStorage.setItem("data", jsonString);
+    location.reload();
+}
+
 function loadData() {
     var jsonString = localStorage.getItem('data');
     if (jsonString) {
         myData = JSON.parse(jsonString);
         for (const records of myData) {
             var innerHTML = `
-        <tr value="${myData.indexOf(myData)}">
-            <td><input value="${myData.indexOf(myData)}" type="checkbox"/></td>
+        <tr class="deletedCheckbox" value="${myData.indexOf(records)}">
+            <td><input value="${myData.indexOf(records)}" type="checkbox"/></td>
             <td>${records.name}</td>
             <td>${records.description}</td>
             <td>$${records.price}</td>
