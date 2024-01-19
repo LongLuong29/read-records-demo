@@ -4,7 +4,6 @@ loadData();
 
 function deleteRecord() {
     var deletedRecord = $("button.deleteRecord");
-    console.log(deletedRecord.val());
 }
 
 function loadData() {
@@ -20,7 +19,7 @@ function loadData() {
             <td>$${records.price}</td> 
             <td>${records.category}</td>
             <td>
-                <button type="button" class="btn btn-info">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateRecord">
                     <span class="glyphicon glyphicon-edit"></span> Edit
                 </button>
                 <button type="button" class="deleteRecord btn btn-danger" data-toggle="modal" data-target="#deleteRecordModal" value="${myData.indexOf(records)}">
@@ -56,28 +55,36 @@ function saveData() {
     location.reload();
 }
 
-function selectAllRecords(){
+function selectAllRecords() {
     var checkedSelectedAll = $("input#selectAllRecords");
-    var allRecordCheckbox =  $("input.recordCheckbox");
-    if(checkedSelectedAll.is(":checked") == true){
-        for (var i = 0; i < allRecordCheckbox.length; i++){
+    var allRecordCheckbox = $("input.recordCheckbox");
+    if (checkedSelectedAll.is(":checked") == true) {
+        for (var i = 0; i < allRecordCheckbox.length; i++) {
             allRecordCheckbox[i].checked = true;
         }
-    }
-    else{
-        for (var i = 0; i < allRecordCheckbox.length; i++){
+    } else {
+        for (var i = 0; i < allRecordCheckbox.length; i++) {
             allRecordCheckbox[i].checked = false;
         }
     }
 }
 
 function deleteSelected() {
-    var allCheckboxes = $("input.recordCheckbox");
     var selectedCheckboxes = $('input.recordCheckbox:checked');
+    var indexes = [];
 
-    selectedCheckboxes.each(function () {
-        myData.splice($(this).val(), 1);
+    selectedCheckboxes.each(function(index,element){
+        indexes.push(element.value);
     })
+
+    var newMyData = []; 
+    myData.forEach(function(value, index) {
+        if(!indexes.includes(index.toString())){
+            newMyData.push(value);
+        }
+    })
+    myData = newMyData;
+
     //Lưu dữ liệu vào localStorage
     var jsonString = JSON.stringify(myData);
     localStorage.setItem("data", jsonString);
@@ -90,4 +97,3 @@ function deleteSelected() {
 //       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
 //     });
 //   });
-
