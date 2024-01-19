@@ -16,14 +16,29 @@
       <hr />
       <div class="row">
         <div class="col-sm-4">
-          <input class="form-control custom-search-box" id="myInput" type="text" placeholder="Type a name ..."/>
+          <input
+            class="form-control custom-search-box"
+            id="myInput"
+            type="text"
+            placeholder="Type a name ..."
+          />
         </div>
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <button type="button" class="btn btn-danger">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-toggle="modal"
+            data-target="#deleteSelectedModal"
+          >
             <span class="glyphicon glyphicon-trash"></span> Delete Selected
           </button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#createModal"
+          >
             <span class="glyphicon glyphicon-plus"></span> Create Record
           </button>
         </div>
@@ -33,6 +48,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th><input type="checkbox" /></th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
@@ -40,134 +56,138 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody id="myTable">
-          <tr>
-            <td>Pillow</td>
-            <td>Sleeping well is very important</td>
-            <td>$29.9</td>
-            <td>Personal</td>
-            <td>
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Earphone</td>
-            <td>You need this one if you love music</td>
-            <td>$26.11</td>
-            <td>Personal</td>
-            <td>
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Mouse</td>
-            <td>Very useful if you love your computer</td>
-            <td>$29.9</td>
-            <td>Personal</td>
-            <td>
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Trash Can</td>
-            <td>It will help you maintain cleaniliness</td>
-            <td>$26.11</td>
-            <td>Sports</td>
-            <td>
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Eye Glasses</td>
-            <td>It will make you read better</td>
-            <td>$29.9</td>
-            <td>Sports</td>
-            <td>
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span> Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="myTable"></tbody>
       </table>
     </div>
 
     <!-- Paging -->
-    <div class="row">
-      <div class="col-sm-4">
-
-      </div>
+    <!-- <div class="row">
+      <div class="col-sm-4"></div>
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
         <div id="custom-search-input">
           <div class="input-group col-md-12">
-              <input type="text" class="form-control input-md" placeholder="Type page number ..." />
-              <span class="input-group-btn">
-                  <button class="btn btn-info btn-md" type="button">
-                      <i class="glyphicon glyphicon-search"></i>
-                  </button>
-              </span>
+            <input
+              type="text"
+              class="form-control input-md"
+              placeholder="Type page number ..."
+            />
+            <span class="input-group-btn">
+              <button class="btn btn-info btn-md" type="button">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+            </span>
           </div>
+        </div>
       </div>
+    </div> -->
+
+    <!-- Delete Selected Modal -->
+    <div id="deleteSelectedModal" class="modal fade" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              onclick="deleteSelected()"
+            >
+              Save changes
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-
-<!-- Modal -->
-<div id="createModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!-- Create Modal -->
+    <div id="createModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+            <h4 class="modal-title">Create Record</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="nameInput">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nameInput"
+                placeholder="Enter name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="descriptionInput">Description</label>
+              <input
+                type="text"
+                class="form-control"
+                id="descriptionInput"
+                placeholder="Enter description"
+              />
+            </div>
+            <div class="form-group">
+              <label for="priceInput">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="priceInput"
+                placeholder="Enter price"
+              />
+            </div>
+            <div class="form-group">
+              <label for="categoryInput">Category</label>
+              <input
+                type="text"
+                class="form-control"
+                id="categoryInput"
+                placeholder="Enter category"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              onclick="saveData()"
+              data-dismiss="modal"
+            >
+              Create
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="./index.js"></script>
-    <script>
-      $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $("#myTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-        });
-      });
-      </script>
   </body>
 </html>
