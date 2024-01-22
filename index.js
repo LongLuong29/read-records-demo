@@ -2,9 +2,16 @@ var myData = [];
 
 loadData();
 
-function deleteRecord() {
-    var deletedRecord = $("button.deleteRecord");
-}
+
+$("button.deleteRecord").on("click", function(){
+    var clickedButton = $(this);
+    myData.splice(clickedButton.val(),1)
+    var jsonString = JSON.stringify(myData);
+    //Lưu dữ liệu vào localStorage
+    localStorage.setItem("data", jsonString);
+    location.reload();
+    clickedButton.closest("tr").remove();
+})
 
 function loadData() {
     var jsonString = localStorage.getItem('data');
@@ -22,12 +29,15 @@ function loadData() {
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateRecord">
                     <span class="glyphicon glyphicon-edit"></span> Edit
                 </button>
-                <button type="button" class="deleteRecord btn btn-danger" data-toggle="modal" data-target="#deleteRecordModal" value="${myData.indexOf(records)}">
+                <button type="button" class="deleteRecord btn btn-danger" 
+                value="${myData.indexOf(records)}">
                     <span class="glyphicon glyphicon-trash"></span> Delete
                 </button>
             </td>
         </tr>
         `;
+                // data-toggle="modal" 
+                // data-target="#deleteRecordModal"
             $("#myTable").append(innerHTML)
         }
     }
@@ -73,13 +83,13 @@ function deleteSelected() {
     var selectedCheckboxes = $('input.recordCheckbox:checked');
     var indexes = [];
 
-    selectedCheckboxes.each(function(index,element){
+    selectedCheckboxes.each(function (index, element) {
         indexes.push(element.value);
     })
 
-    var newMyData = []; 
-    myData.forEach(function(value, index) {
-        if(!indexes.includes(index.toString())){
+    var newMyData = [];
+    myData.forEach(function (value, index) {
+        if (!indexes.includes(index.toString())) {
             newMyData.push(value);
         }
     })
