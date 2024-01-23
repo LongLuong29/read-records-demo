@@ -3,7 +3,38 @@ var myData = [];
 loadData();
 
 
-$(".saveEdit").on("click", function(){
+$("input#searchingInput").on("keyup", function () {
+    var inputValue = $(this).val();
+    var filteredData = myData.filter(function (item) {
+        return item.name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+    })
+    var html = "";
+    filteredData.forEach(function (item, index) {
+        html += "<tr>";
+        html += `<td><input class="recordCheckbox" value="${myData.indexOf(item)}" type="checkbox"/></td>`;
+        html += "<td>" + (index + 1) + "</td>";
+        html += "<td>" + item.name + "</td>";
+        html += "<td>" + item.description + "</td>";
+        html += "<td>" + item.price + "</td>";
+        html += "<td>" + item.category + "</td>";
+        html += "<td class='hidden'>" + myData.indexOf(item) + "</td>";
+        html += `<td>
+                    <button type="button" class="recordEdit btn btn-info" 
+                    data-toggle="modal" 
+                    data-target="#updateModal">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button>`;
+        html += `   <button type="button" class="deleteRecord btn btn-danger" 
+                    value="${myData.indexOf(item)}">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                </td>`;
+        html += "</tr>";
+    })
+    $("tbody").html(html);
+})
+
+$(".saveEdit").on("click", function () {
     var nameValue = $("#nameEdit").val();
     var descriptionValue = $("#descriptionEdit").val();
     var priceValue = $("#priceEdit").val();
@@ -21,34 +52,6 @@ $(".saveEdit").on("click", function(){
     //Lưu dữ liệu vào localStorage
     localStorage.setItem("data", jsonString);
     location.reload();
-})
-
-$(".recordEdit").on("click", function(){
-    //Lay thong tin
-    var selectedRecord = $(this).closest("tr");
-    var name = selectedRecord.find("td:nth-child(2)").text()
-    var description = selectedRecord.find("td:nth-child(3)").text()
-    var price = selectedRecord.find("td:nth-child(4)").text()
-    var category = selectedRecord.find("td:nth-child(5)").text()
-    var index = selectedRecord.find("td:nth-child(6)").text()
-
-    //Hien thi
-    $("#nameEdit").val(name)
-    $("#descriptionEdit").val(description)
-    $("#priceEdit").val(price)
-    $("#categoryEdit").val(category)
-    $("#recordIndex").val(index)
-
-})
-
-$("button.deleteRecord").on("click", function(){
-    var clickedButton = $(this);
-    myData.splice(clickedButton.val(),1)
-    var jsonString = JSON.stringify(myData);
-    //Lưu dữ liệu vào localStorage
-    localStorage.setItem("data", jsonString);
-    location.reload();
-    clickedButton.closest("tr").remove();
 })
 
 function loadData() {
@@ -77,12 +80,40 @@ function loadData() {
             </td>
         </tr>
         `;
-                // data-toggle="modal" 
-                // data-target="#deleteRecordModal"
+            // data-toggle="modal" 
+            // data-target="#deleteRecordModal"
             $("#myTable").append(innerHTML)
         }
     }
 }
+
+$(".recordEdit").on("click", function () {
+    //Lay thong tin
+    var selectedRecord = $(this).closest("tr");
+    var name = selectedRecord.find("td:nth-child(2)").text()
+    var description = selectedRecord.find("td:nth-child(3)").text()
+    var price = selectedRecord.find("td:nth-child(4)").text()
+    var category = selectedRecord.find("td:nth-child(5)").text()
+    var index = selectedRecord.find("td:nth-child(6)").text()
+
+    //Hien thi
+    $("#nameEdit").val(name)
+    $("#descriptionEdit").val(description)
+    $("#priceEdit").val(price)
+    $("#categoryEdit").val(category)
+    $("#recordIndex").val(index)
+
+})
+
+$("button.deleteRecord").on("click", function () {
+    var clickedButton = $(this);
+    myData.splice(clickedButton.val(), 1)
+    var jsonString = JSON.stringify(myData);
+    //Lưu dữ liệu vào localStorage
+    localStorage.setItem("data", jsonString);
+    location.reload();
+    clickedButton.closest("tr").remove();
+})
 
 function saveData() {
     var nameValue = $("#nameInput").val();
@@ -114,7 +145,7 @@ function selectAllRecords() {
             allRecordCheckbox[i].checked = true;
         }
     } else {
-        for (var i = 0; i < allRecordCheckbox.length; i++) {
+        for (var i = 0; i < allRecordaCheckbox.length; i++) {
             allRecordCheckbox[i].checked = false;
         }
     }
@@ -141,10 +172,3 @@ function deleteSelected() {
     localStorage.setItem("data", jsonString);
     location.reload();
 }
-
-// $("#myInput").on("keyup", function () {
-//     var value = $(this).val().toLowerCase();
-//     $("#myTable").child("tr").filter(function () {
-//       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-//     });
-//   });
