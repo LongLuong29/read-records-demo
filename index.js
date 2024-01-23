@@ -1,13 +1,67 @@
 var myData = [];
 
-loadData();
+var currentPage = 1;
+var recordPerPage = 5;
+var totalRecord = myData.length;
+var totalPages = Math.ceil(totalRecord / recordPerPage);
 
+loadData();
+// displayCurrentPage();
+createPaginationButtons();
+
+$(".pagination").on('click', function(e){
+    e.preventDefault();
+    currentPage = parseInt($(this).text());
+    displayCurrentPage();
+})
+
+function displayCurrentPage(){
+    var startIndex = (currentPage - 1) * recordPerPage;
+    var endIndex = startIndex + recordPerPage;
+    var currentRecord = myData.slice(startIndex, endIndex);
+
+    var html = "";
+
+    $.each(currentRecord, function(index, item){
+        html += "<tr>";
+        html += `<td><input class="recordCheckbox" value="${myData.indexOf(item)}" type="checkbox"/></td>`;
+        html += "<td>" + (index + 1) + "</td>";
+        html += "<td>" + item.name + "</td>";
+        html += "<td>" + item.description + "</td>";
+        html += "<td>" + item.price + "</td>";
+        html += "<td>" + item.category + "</td>";
+        html += "<td class='hidden'>" + myData.indexOf(item) + "</td>";
+        html += `<td>
+                    <button type="button" class="recordEdit btn btn-info" 
+                    data-toggle="modal" 
+                    data-target="#updateModal">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button>`;
+        html += `   <button type="button" class="deleteRecord btn btn-danger" 
+                    value="${myData.indexOf(item)}">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                </td>`;
+        html += "</tr>";
+    })
+
+    $("#myTable").html(html);
+}
+
+function createPaginationButtons() {
+    var paginationHtml = "";
+    for (var i = 1; i <= totalPages; i++) {
+        paginationHtml += 
+        `<li class="page-item ${i == currentPage? "active" : ""}"><a class="page-link" href="#">${i}</a></li>`;
+    }
+    $("ul.pagination").html(paginationHtml);
+}
 
 $("input#searchingInput").on("keyup", function () {
     var inputValue = $(this).val();
     var filteredData = myData.filter(function (item) {
         return item.name.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
-    })
+    })  
     var html = "";
     filteredData.forEach(function (item, index) {
         html += "<tr>";
@@ -53,6 +107,9 @@ $(".saveEdit").on("click", function () {
     localStorage.setItem("data", jsonString);
     location.reload();
 })
+
+
+
 
 function loadData() {
     var jsonString = localStorage.getItem('data');
@@ -172,3 +229,4 @@ function deleteSelected() {
     localStorage.setItem("data", jsonString);
     location.reload();
 }
+
