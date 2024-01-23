@@ -1,296 +1,291 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Records</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Read Records</h1>
-      <hr />
-      <div class="row">
-        <div class="col-sm-4">
-          <input
-            class="form-control custom-search-box"
-            id="myInput"
-            type="text"
-            placeholder="Type a name ..."
-          />
-        </div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-          <button
-            type="button"
-            class="btn btn-danger"
-            data-toggle="modal"
-            data-target="#deleteSelectedModal"
-          >
-            <span class="glyphicon glyphicon-trash"></span> Delete Selected
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#createModal"
-          >
-            <span class="glyphicon glyphicon-plus"></span> Create Record
-          </button>
-        </div>
-      </div>
-
-      <!-- Table -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAllRecords" onchange="selectAllRecords()" /></th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="myTable"></tbody>
-      </table>
-    </div>
-
-    <!-- Paging -->
-    <!-- <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-4"></div>
-      <div class="col-sm-4">
-        <div id="custom-search-input">
-          <div class="input-group col-md-12">
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Records</title>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      />
+      <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+      <div class="container">
+        <h1>Read Records</h1>
+        <hr />
+        <div class="row">
+          <div class="col-sm-4">
             <input
+              class="form-control custom-search-box"
+              id="myInput"
               type="text"
-              class="form-control input-md"
-              placeholder="Type page number ..."
+              placeholder="Type a name ..."
             />
-            <span class="input-group-btn">
-              <button class="btn btn-info btn-md" type="button">
-                <i class="glyphicon glyphicon-search"></i>
-              </button>
-            </span>
           </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Update record modal -->
-    <!-- <div id="updateRecord" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-            <h4 class="modal-title">Update Record</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="updateName">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="updateName"
-                placeholder="Enter name"
-              />
-            </div>
-            <div class="form-group">
-              <label for="updateDescription">Description</label>
-              <input
-                type="text"
-                class="form-control"
-                id="updateDescription"
-                placeholder="Enter description"
-              />
-            </div>
-            <div class="form-group">
-              <label for="updatePrice">Price</label>
-              <input
-                type="number"
-                class="form-control"
-                id="updatePrice"
-                placeholder="Enter price"
-              />
-            </div>
-            <div class="form-group">
-              <label for="updateCategory">Category</label>
-              <input
-                type="text"
-                class="form-control"
-                id="updateCategory"
-                placeholder="Enter category"
-              />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              Close
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteSelectedModal"
+            >
+              <span class="glyphicon glyphicon-trash"></span> Delete Selected
             </button>
             <button
-              type="submit"
+              type="button"
               class="btn btn-primary"
-              onclick=""
-              data-dismiss="modal"
+              data-toggle="modal"
+              data-target="#createModal"
             >
-              Update
+              <span class="glyphicon glyphicon-plus"></span> Create Record
             </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="selectAllRecords" onchange="selectAllRecords()" /></th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="myTable"></tbody>
+        </table>
+      </div>
+
+      <!-- Delete Selected Modal -->
+      <div id="deleteSelectedModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Delete selected</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Do you want to delete all selected records?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="deleteSelected()"
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Create Modal -->
+      <div id="createModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+              <h4 class="modal-title">Create Record</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="nameInput">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameInput"
+                  placeholder="Enter name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="descriptionInput">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="descriptionInput"
+                  placeholder="Enter description"
+                />
+              </div>
+              <div class="form-group">
+                <label for="priceInput">Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="priceInput"
+                  placeholder="Enter price"
+                />
+              </div>
+              <div class="form-group">
+                <label for="categoryInput">Category</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="categoryInput"
+                  placeholder="Enter category"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onclick="saveData()"
+                data-dismiss="modal"
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paging -->
+      <!-- <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+          <div id="custom-search-input">
+            <div class="input-group col-md-12">
+              <input
+                type="text"
+                class="form-control input-md"
+                placeholder="Type page number ..."
+              />
+              <span class="input-group-btn">
+                <button class="btn btn-info btn-md" type="button">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </span>
+            </div>
           </div>
         </div>
       </div> -->
 
-    <!-- Delete Record -->
-    <!-- <div id="deleteRecordModal" class="modal fade" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Delete record</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want to delete this record?</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal"
-              onclick="deleteRecord()"
-            >
-              Yes
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              No
-            </button>
+      <!-- Update record modal -->
+      <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel">Update Record</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="nameEdit">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameEdit"
+                />
+              </div>
+              <div class="form-group">
+                <label for="descriptionEdit">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="descriptionEdit"
+                />
+              </div>
+              <div class="form-group">
+                <label for="priceEdit">Price</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="priceEdit"
+                />
+              </div>
+              <div class="form-group">
+                <label for="categoryEdit">Category</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="categoryEdit"
+                />
+              </div>
+              <div class="form-group hidden">
+                <label for="recordIndex">recordIndex</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="recordIndex"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="saveEdit btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
-    </div> -->
 
-    <!-- Delete Selected Modal -->
-    <div id="deleteSelectedModal" class="modal fade" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Delete selected</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Do you want to delete all selected records?</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal"
-              onclick="deleteSelected()"
-            >
-              Confirm
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
+      <!-- Delete Record -->
+      <!-- <div id="deleteRecordModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Delete record</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Do you want to delete this record?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                onclick="deleteRecord()"
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- Create Modal -->
-    <div id="createModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-            <h4 class="modal-title">Create Record</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="nameInput">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nameInput"
-                placeholder="Enter name"
-              />
-            </div>
-            <div class="form-group">
-              <label for="descriptionInput">Description</label>
-              <input
-                type="text"
-                class="form-control"
-                id="descriptionInput"
-                placeholder="Enter description"
-              />
-            </div>
-            <div class="form-group">
-              <label for="priceInput">Price</label>
-              <input
-                type="number"
-                class="form-control"
-                id="priceInput"
-                placeholder="Enter price"
-              />
-            </div>
-            <div class="form-group">
-              <label for="categoryInput">Category</label>
-              <input
-                type="text"
-                class="form-control"
-                id="categoryInput"
-                placeholder="Enter category"
-              />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onclick="saveData()"
-              data-dismiss="modal"
-            >
-              Create
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div> -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="./index.js"></script>
-  </body>
-</html>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="./index.js"></script>
+    </body>
+  </html>

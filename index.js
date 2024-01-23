@@ -3,6 +3,44 @@ var myData = [];
 loadData();
 
 
+$(".saveEdit").on("click", function(){
+    var nameValue = $("#nameEdit").val();
+    var descriptionValue = $("#descriptionEdit").val();
+    var priceValue = $("#priceEdit").val();
+    var categoryValue = $("#categoryEdit").val();
+    var recordIndexValue = $("#recordIndex").val();
+
+    var record = {
+        name: nameValue,
+        description: descriptionValue,
+        price: priceValue,
+        category: categoryValue
+    }
+    myData[recordIndexValue] = record;
+    var jsonString = JSON.stringify(myData);
+    //Lưu dữ liệu vào localStorage
+    localStorage.setItem("data", jsonString);
+    location.reload();
+})
+
+$(".recordEdit").on("click", function(){
+    //Lay thong tin
+    var selectedRecord = $(this).closest("tr");
+    var name = selectedRecord.find("td:nth-child(2)").text()
+    var description = selectedRecord.find("td:nth-child(3)").text()
+    var price = selectedRecord.find("td:nth-child(4)").text()
+    var category = selectedRecord.find("td:nth-child(5)").text()
+    var index = selectedRecord.find("td:nth-child(6)").text()
+
+    //Hien thi
+    $("#nameEdit").val(name)
+    $("#descriptionEdit").val(description)
+    $("#priceEdit").val(price)
+    $("#categoryEdit").val(category)
+    $("#recordIndex").val(index)
+
+})
+
 $("button.deleteRecord").on("click", function(){
     var clickedButton = $(this);
     myData.splice(clickedButton.val(),1)
@@ -25,8 +63,11 @@ function loadData() {
             <td>${records.description}</td>
             <td>$${records.price}</td> 
             <td>${records.category}</td>
+            <td class="hidden">${myData.indexOf(records)}</td>
             <td>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#updateRecord">
+                <button type="button" class="recordEdit btn btn-info" 
+                data-toggle="modal" 
+                data-target="#updateModal">
                     <span class="glyphicon glyphicon-edit"></span> Edit
                 </button>
                 <button type="button" class="deleteRecord btn btn-danger" 
